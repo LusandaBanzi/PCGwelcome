@@ -3,1649 +3,366 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>PCG</title>
+<title>Backdrop</title>
 
 <style>
-
-/* =========================================================
-   RESET
-========================================================= */
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-html,
-body{
+html,body{
     width:100%;
     height:100%;
     overflow:hidden;
 }
 
-
-/* =========================================================
-   BODY
-========================================================= */
-
 body{
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    background:#efe2c4;
-
-    color:#241b14;
-
+     font-family:Arial, Helvetica, sans-serif;
     position:relative;
+    color:#fff;
+    background:linear-gradient(-45deg,#000000,#0a1628,#0d1b2a,#1b263b,#2a3b55,#b8860b,#1b263b,#000000);
+    background-size:400% 400%;
+    animation:gradientShift 25s ease infinite;
+    );
+    background-size:400% 400%;
+    animation:gradientShift 25s ease infinite;
 }
 
-
-/* =========================================================
-   MAIN SCREEN
-========================================================= */
-
-.screen{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    overflow:hidden;
-
-    background:#efe2c4;
+@keyframes gradientShift{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.header{
-
+/* =========================
+   BACKGROUND SCROLLING BAND
+   (seamless, appears instantly)
+========================= */
+.bg-scroll{
     position:absolute;
-
-    top:0;
+    top:50%;
     left:0;
-
+    transform:translateY(-50%);
     width:100%;
-    height:12%;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ffffff 0%,
-            #fbf8ef 100%
-        );
-
-    border-bottom:5px solid #171717;
-
-    display:flex;
-
-    align-items:center;
-
-    padding:0 2vw;
-
-    z-index:100;
-
-    box-shadow:
-        0 4px 15px rgba(0,0,0,.15);
+    overflow:hidden;
+    z-index:1;
+    pointer-events:none;
 }
 
+.bg-scroll-track{
+    display:flex;
+    width:max-content;
+    animation:bgScroll 220s linear infinite;
+}
 
-/* =========================================================
-   LOGO
-========================================================= */
+.bg-scroll-track span{
+    font-size:30vw;
+    font-weight:900;
+    color:transparent;
+    -webkit-text-stroke:2px white;
+    text-stroke:2px rgba(220,180,65,0.15);
+    white-space:nowrap;
+    padding-right:6vw;
+    line-height:1;
+    text-transform:uppercase;
+}
+
+@keyframes bgScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+}
+
+/* =========================
+   HEADER
+========================= */
+.header{
+    position:absolute;
+    top:2vh;
+    left:2vw;
+    display:flex;
+    align-items:center;
+    gap:1.5vw;
+    z-index:20;
+    width:96vw;      /* Gives almost the full screen width */
+}
 
 .logo{
-
-    width:5.2vw;
-
-    min-width:65px;
-
-    max-width:100px;
-
-    height:auto;
-
-    max-height:9vh;
-
-    object-fit:contain;
-
-    margin-right:1.2vw;
-
-    flex-shrink:0;
-
-    filter:
-        drop-shadow(
-            0 3px 3px
-            rgba(0,0,0,.25)
-        );
-
-    animation:
-        logoFloat 5s ease-in-out infinite;
+    width:160px;
+    height:115px;
+    object-fit:fill;
 }
 
+.name{
+    font-size:2.9vw;
+    font-weight:1000;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    line-height:1.2;
 
-@keyframes logoFloat{
+    /* Blue text */
+    color:navy;
 
-    0%,100%{
-        transform:translateY(0);
-    }
+    /* Gold outline around each letter */
+    -webkit-text-stroke:2px #FFD700;
+    text-stroke:2px #FFD700;
 
-    50%{
-        transform:translateY(-3px);
-    }
+    /* Optional glow */
+    text-shadow:
+        0 0 10px rgba(255,215,0,0.6),
+        0 0 20px rgba(255,215,0,0.4),
+        2px 2px 5px rgba(0,0,0,0.5);
 }
 
-
-/* =========================================================
-   CHURCH NAME
-========================================================= */
-
-.church-name{
-
-    flex:1;
-
-    min-width:0;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:clip;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    /*
-       Responsive font size.
-       Prevents the name from becoming too large.
-    */
-
-    font-size:clamp(
-        20px,
-        2.9vw,
-        56px
-    );
-
+/* =========================
+   OUTLINE + MAIN THANK YOU
+========================= */
+.center-wrap{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:10;
+    text-align:center;
+    width:100vw;      /* Full viewport width */
+    overflow:visible;
+}
+.bg-outline{
+    font-size:23vw;
     font-weight:900;
+    color:transparent;
 
-    letter-spacing:
-        clamp(
-            0px,
-            .08vw,
-            2px
-        );
+    -webkit-text-stroke:2px rgba(223,193,168,0.20);
+    text-stroke:2px rgba(223,193,168,0.20);
 
     text-transform:uppercase;
-
-    color:#211914;
-
     line-height:1;
-
-    text-align:left;
-
-    transform-origin:left center;
-
-    text-shadow:
-        1px 1px 0 #ffffff,
-        2px 3px 4px
-        rgba(0,0,0,.18);
-
-    animation:
-        churchNameGlow 6s ease-in-out infinite;
-}
-
-
-@keyframes churchNameGlow{
-
-    0%,100%{
-
-        text-shadow:
-            1px 1px 0 #ffffff,
-            2px 3px 4px
-            rgba(0,0,0,.18);
-    }
-
-    50%{
-
-        text-shadow:
-            1px 1px 0 #ffffff,
-            0 0 10px
-            rgba(210,170,80,.25),
-            2px 3px 4px
-            rgba(0,0,0,.18);
-    }
-}
-
-
-/* =========================================================
-   MAIN PRESENTATION AREA
-========================================================= */
-
-.main-area{
-
     position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    white-space:nowrap;
+    z-index:1;
+}
 
-    left:8.3%;
-    right:8.3%;
+.main-text{
+    position:relative;
+    font-size:17.2vw;
+    font-weight:900;
+    text-transform:uppercase;
+    line-height:1;
+    white-space:nowrap;     /* Prevent wrapping */
+    display:inline-block;   /* Keep text together */
+    z-index:10;
+ background:linear-gradient(90deg,#000000,#0a1628,#1e3a5f,#4682b4,#daa520,#ffd700,#daa520,#1e3a5f,#000000);
 
-    top:12%;
-    bottom:13%;
+    background-size:300% 100%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
 
+    animation:pulse 4s ease-in-out infinite,
+              hue 12s linear infinite;
+
+    filter:drop-shadow(0 0 25px rgba(201,157,58,.65));
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.04);}
+}
+
+@keyframes hue{
+    from{background-position:0% 50%;}
+    to{background-position:300% 50%;}
+}
+
+/* =========================
+   MARQUEES (top + bottom)
+========================= */
+.marquee{
+    position:absolute;
+    width:100%;
     overflow:hidden;
-
-    /*
-       WARM CHAMPAGNE / CREAM
-       NOT PURE WHITE
-    */
-
-    background:
-
-        radial-gradient(
-            ellipse at center,
-            #f8edcf 0%,
-            #f3e5c5 38%,
-            #ead7aa 72%,
-            #dfc78e 100%
-        );
-
-    border-left:5px solid #171717;
-    border-right:5px solid #171717;
-
     z-index:5;
 }
 
+.marquee.top{top:16vh;}
+.marquee.bottom{bottom:10vh;}
 
-/* =========================================================
-   ANIMATED CENTER LIGHT
-========================================================= */
-
-.main-area::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:75%;
-    height:100%;
-
-    left:50%;
-    top:50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    background:
-
-        radial-gradient(
-            ellipse,
-            rgba(255,244,207,.7),
-            rgba(241,220,169,.35),
-            transparent 70%
-        );
-
-    filter:blur(18px);
-
-    z-index:1;
-
-    animation:
-        centerLight 8s ease-in-out infinite;
-}
-
-
-@keyframes centerLight{
-
-    0%,100%{
-
-        opacity:.65;
-
-        transform:
-            translate(-50%,-50%)
-            scale(1);
-    }
-
-    50%{
-
-        opacity:1;
-
-        transform:
-            translate(-50%,-50%)
-            scale(1.12);
-    }
-}
-
-
-/* =========================================================
-   ROTATING LIGHT HALO
-========================================================= */
-
-.main-area::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:55%;
-    height:70%;
-
-    left:50%;
-    top:50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    border-radius:50%;
-
-    border:
-        1px solid
-        rgba(255,255,255,.3);
-
-    box-shadow:
-
-        0 0 50px
-        rgba(194,155,68,.15),
-
-        inset 0 0 60px
-        rgba(255,255,255,.18);
-
-    z-index:2;
-
-    animation:
-        haloRotate 18s linear infinite;
-}
-
-
-@keyframes haloRotate{
-
-    from{
-        transform:
-            translate(-50%,-50%)
-            rotate(0deg)
-            scale(1);
-    }
-
-    to{
-        transform:
-            translate(-50%,-50%)
-            rotate(360deg)
-            scale(1.08);
-    }
-}
-
-
-/* =========================================================
-   INFINITE WELCOME BACKGROUND
-========================================================= */
-
-.welcome-scroll{
-
-    position:absolute;
-
-    left:0;
-
-    top:50%;
-
-    width:100%;
-
-    transform:
-        translateY(-50%);
-
-    overflow:hidden;
-
-    z-index:3;
-
-    pointer-events:none;
-
-    opacity:.55;
-}
-
-
-.welcome-track{
-
+.track{
     display:flex;
-
     width:max-content;
-
-    animation:
-        welcomeInfinity
-        42s
-        linear
-        infinite;
+    animation:scroll 90s linear infinite;
 }
 
-
-.welcome-group{
-
-    display:flex;
-
-    align-items:center;
-
+.track span{
+    margin-right:8vw;
+    font-size:3vw;
+    color:#F0D98A;
+    text-transform:uppercase;
+    font-weight:700;
+    letter-spacing:3px;
     white-space:nowrap;
 }
 
-
-.welcome-group span{
-
-    font-size:16vw;
-
-    font-weight:900;
-
-    line-height:1;
-
-    letter-spacing:.5vw;
-
-    color:transparent;
-
-    -webkit-text-stroke:
-        3px
-        rgba(148,111,42,.28);
-
-    text-stroke:
-        3px
-        rgba(148,111,42,.28);
-
-    margin-right:7vw;
-
-    text-transform:uppercase;
+@keyframes scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
 }
-
-
-@keyframes welcomeInfinity{
-
-    from{
-        transform:translateX(0);
-    }
-
-    to{
-        transform:translateX(-50%);
-    }
-}
-
-
-/* =========================================================
-   MOVING LIGHT BEAMS
-========================================================= */
-
-.light-beam{
-
-    position:absolute;
-
-    width:20%;
-
-    height:150%;
-
-    top:-25%;
-
-    opacity:.12;
-
-    filter:blur(20px);
-
-    transform:rotate(20deg);
-
-    z-index:4;
-
-    pointer-events:none;
-}
-
-
-.beam-red{
-
-    left:10%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #d52d36,
-            transparent
-        );
-
-    animation:
-        beamMove1 12s ease-in-out infinite;
-}
-
-
-.beam-gold{
-
-    left:40%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #d8a72c,
-            transparent
-        );
-
-    animation:
-        beamMove2 15s ease-in-out infinite;
-}
-
-
-.beam-green{
-
-    right:5%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #318343,
-            transparent
-        );
-
-    animation:
-        beamMove3 13s ease-in-out infinite;
-}
-
-
-@keyframes beamMove1{
-
-    0%,100%{
-        transform:
-            translateX(-20vw)
-            rotate(20deg);
-    }
-
-    50%{
-        transform:
-            translateX(30vw)
-            rotate(20deg);
-    }
-}
-
-
-@keyframes beamMove2{
-
-    0%,100%{
-        transform:
-            translateX(20vw)
-            rotate(20deg);
-    }
-
-    50%{
-        transform:
-            translateX(-30vw)
-            rotate(20deg);
-    }
-}
-
-
-@keyframes beamMove3{
-
-    0%,100%{
-        transform:
-            translateX(20vw)
-            rotate(20deg);
-    }
-
-    50%{
-        transform:
-            translateX(-25vw)
-            rotate(20deg);
-    }
-}
-
-
-/* =========================================================
-   CENTER CONTENT
-========================================================= */
-
-.center-content{
-
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    width:90%;
-
-    text-align:center;
-
-    z-index:20;
-}
-
-
-/* =========================================================
-   WELCOME TO
-========================================================= */
-
-.welcome-small{
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    font-size:2.1vw;
-
-    font-weight:900;
-
-    letter-spacing:.55vw;
-
-    color:#332820;
-
-    text-transform:uppercase;
-
-    margin-bottom:1vh;
-
-    animation:
-        welcomeSmall 2s ease-out;
-}
-
-
-@keyframes welcomeSmall{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateY(-30px);
-
-        letter-spacing:1vw;
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateY(0);
-
-        letter-spacing:.55vw;
-    }
-}
-
-
-/* =========================================================
-   MAIN WELCOME
-========================================================= */
-
-.main-welcome{
-
-    position:relative;
-
-    display:inline-block;
-
-    font-size:clamp(
-        90px,
-        8.2vw,
-        158px
-    );
-
-    font-weight:900;
-
-    line-height:.9;
-
-    text-transform:uppercase;
-
-    letter-spacing:.15vw;
-
-    color:#251b14;
-
-    text-shadow:
-
-        2px 3px 0
-        rgba(255,255,255,.8),
-
-        4px 7px 10px
-        rgba(0,0,0,.18);
-
-    animation:
-        mainWelcome 5s
-        ease-in-out
-        infinite;
-}
-
-
-@keyframes mainWelcome{
-
-    0%,100%{
-
-        transform:
-            scale(1)
-            translateY(0);
-    }
-
-    50%{
-
-        transform:
-            scale(1.035)
-            translateY(-5px);
-    }
-}
-
-
-/* =========================================================
-   COLOURED LINE UNDER WELCOME
-========================================================= */
-
-.main-welcome::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:4%;
-
-    right:4%;
-
-    bottom:-2vh;
-
-    height:8px;
-
-    border-radius:10px;
-
-    background:
-
-        linear-gradient(
-            90deg,
-
-            #d32f38 0%,
-            #d32f38 25%,
-
-            #f2b51d 25%,
-            #f2b51d 50%,
-
-            #318343 50%,
-            #318343 75%,
-
-            #347db5 75%,
-            #347db5 100%
-        );
-
-    box-shadow:
-        0 3px 10px
-        rgba(0,0,0,.2);
-
-    animation:
-        lineAnimation
-        3s ease-in-out
-        infinite;
-}
-
-
-@keyframes lineAnimation{
-
-    0%,100%{
-        transform:
-            scaleX(.75);
-        opacity:.65;
-    }
-
-    50%{
-        transform:
-            scaleX(1);
-        opacity:1;
-    }
-}
-
-
-/* =========================================================
-   SUBTITLE
-========================================================= */
-
-.subtitle{
-
-    margin-top:5vh;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    font-size:1.55vw;
-
-    font-weight:800;
-
-    letter-spacing:.7vw;
-
-    color:#3c3027;
-
-    text-transform:uppercase;
-
-    animation:
-        subtitleAnimation
-        4s ease-in-out infinite;
-}
-
-
-@keyframes subtitleAnimation{
-
-    0%,100%{
-        opacity:.65;
-
-        transform:
-            translateY(0);
-    }
-
-    50%{
-        opacity:1;
-
-        transform:
-            translateY(-4px);
-    }
-}
-
-
-/* =========================================================
-   SIDE PANELS
-========================================================= */
-
-.side{
-
-    position:absolute;
-
-    top:12%;
-    bottom:13%;
-
-    width:8.3%;
-
-    background:#ffffff;
-
-    z-index:40;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:space-around;
-
-    align-items:center;
-
-    padding:3vh 0;
-}
-
-
-.side-left{
-
-    left:0;
-
-    border-right:
-        5px solid #171717;
-}
-
-
-.side-right{
-
-    right:0;
-
-    border-left:
-        5px solid #171717;
-}
-
-
-/* =========================================================
-   SIDE GEOMETRIC SHAPES
-========================================================= */
-
+/* =========================
+   FLOATING SHAPES
+========================= */
 .shape{
-
-    width:5.1vw;
-
-    height:3.7vw;
-
-    min-width:45px;
-    min-height:32px;
-
-    max-width:95px;
-    max-height:70px;
-
-    border:
-        7px solid #111;
-
-    clip-path:
-        polygon(
-            18% 0%,
-            82% 0%,
-            100% 50%,
-            82% 100%,
-            18% 100%,
-            0% 50%
-        );
-
-    position:relative;
-
-    box-shadow:
-        0 5px 12px
-        rgba(0,0,0,.25);
-
-    animation:
-        shapeDance
-        5s
-        ease-in-out
-        infinite;
-}
-
-
-/* =========================================================
-   SHAPE HIGHLIGHT
-========================================================= */
-
-.shape::after{
-
-    content:"";
-
     position:absolute;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            120deg,
-            rgba(255,255,255,.45),
-            transparent 45%
-        );
-
-    opacity:.7;
-
-    animation:
-        shapeShine
-        3s
-        ease-in-out
-        infinite;
-}
-
-
-/* =========================================================
-   SHAPE COLOURS
-========================================================= */
-
-.shape.red{
-    background:#d32f3b;
-}
-
-.shape.blue{
-    background:#347db5;
-}
-
-.shape.green{
-    background:#318343;
-}
-
-.shape.yellow{
-    background:#f3b91c;
-}
-
-
-/* =========================================================
-   INTERESTING SHAPE ANIMATION
-========================================================= */
-
-@keyframes shapeDance{
-
-    0%{
-
-        transform:
-            translate(0,0)
-            rotate(0deg)
-            scale(1);
-    }
-
-    20%{
-
-        transform:
-            translate(4px,-8px)
-            rotate(5deg)
-            scale(1.05);
-    }
-
-    45%{
-
-        transform:
-            translate(-3px,-14px)
-            rotate(-6deg)
-            scale(1.1);
-    }
-
-    70%{
-
-        transform:
-            translate(5px,-5px)
-            rotate(4deg)
-            scale(1.03);
-    }
-
-    100%{
-
-        transform:
-            translate(0,0)
-            rotate(0deg)
-            scale(1);
-    }
-}
-
-
-@keyframes shapeShine{
-
-    0%,100%{
-        opacity:.25;
-        transform:translateX(-100%);
-    }
-
-    50%{
-        opacity:.8;
-        transform:translateX(100%);
-    }
-}
-
-
-/* =========================================================
-   DIFFERENT SHAPE TIMINGS
-========================================================= */
-
-.side .shape:nth-child(1){
-    animation-delay:0s;
-}
-
-.side .shape:nth-child(2){
-    animation-delay:-1.3s;
-}
-
-.side .shape:nth-child(3){
-    animation-delay:-2.6s;
-}
-
-
-/* =========================================================
-   BOTTOM BAR
-========================================================= */
-
-.bottom-bar{
-
-    position:absolute;
-
-    left:0;
-    bottom:0;
-
-    width:100%;
-
-    height:13%;
-
-    background:#ffffff;
-
-    border-top:
-        5px solid #171717;
-
-    z-index:100;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:1vw;
-}
-
-
-/* =========================================================
-   BOTTOM SHAPES
-========================================================= */
-
-.bottom-shape{
-
-    width:11vw;
-
-    height:4vw;
-
-    max-width:190px;
-    max-height:65px;
-
-    min-width:80px;
-    min-height:35px;
-
-    border:
-        7px solid #111;
-
-    clip-path:
-        polygon(
-            15% 0%,
-            85% 0%,
-            100% 50%,
-            85% 100%,
-            15% 100%,
-            0% 50%
-        );
-
-    box-shadow:
-        0 4px 10px
-        rgba(0,0,0,.2);
-
-    animation:
-        bottomShapeDance
-        4s
-        ease-in-out
-        infinite;
-}
-
-
-.bottom-shape:nth-child(1){
-    animation-delay:0s;
-}
-
-.bottom-shape:nth-child(2){
-    animation-delay:-1s;
-}
-
-.bottom-shape:nth-child(4){
-    animation-delay:-2s;
-}
-
-.bottom-shape:nth-child(5){
-    animation-delay:-3s;
-}
-
-
-@keyframes bottomShapeDance{
-
-    0%,100%{
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
-    50%{
-
-        transform:
-            translateY(-9px)
-            scale(1.06);
-    }
-}
-
-
-/* =========================================================
-   BOTTOM MESSAGE
-========================================================= */
-
-.bottom-message{
-
-    min-width:31vw;
-
-    padding:
-        1.2vh
-        2vw;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            #f2e4c3,
-            #fffaf0,
-            #f2e4c3
-        );
-
-    border-radius:5px;
-
-    text-align:center;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    font-size:clamp(
-        20px,
-        2vw,
-        38px
-    );
-
-    font-weight:900;
-
-    letter-spacing:.2vw;
-
-    text-transform:uppercase;
-
-    color:#2a211b;
-
-    box-shadow:
-        0 4px 15px
-        rgba(0,0,0,.15);
-
-    animation:
-        bottomMessage
-        4s
-        ease-in-out
-        infinite;
-}
-
-
-@keyframes bottomMessage{
-
-    0%,100%{
-
-        transform:
-            scale(1);
-
-        box-shadow:
-            0 4px 15px
-            rgba(0,0,0,.15);
-    }
-
-    50%{
-
-        transform:
-            scale(1.025);
-
-        box-shadow:
-            0 5px 22px
-            rgba(194,155,68,.28);
-    }
-}
-
-
-/* =========================================================
-   FLOATING PARTICLES
-========================================================= */
-
-.particle{
-
-    position:absolute;
-
-    width:5px;
-    height:5px;
-
     border-radius:50%;
+    filter:blur(6px);
+    opacity:.55;
+    z-index:2;
+    mix-blend-mode:screen;
+}
 
-    background:#c49b45;
+.s1{
+    width:14vw;height:14vw;
+    background:radial-gradient(circle,#4682b4,transparent 70%);
+    top:18%;left:15%;
+    animation:float1 14s ease-in-out infinite;
+}
 
-    opacity:.35;
+.s2{
+    width:20vw;height:20vw;
+    background:radial-gradient(circle,#daa520,transparent 70%);
+    bottom:15%;right:12%;
+    animation:float2 18s ease-in-out infinite;
+}
 
-    z-index:8;
+.s3{
+    width:11vw;height:11vw;
+    background:radial-gradient(circle,#1e3a5f,transparent 70%);
+    top:28%;right:22%;
+    animation:float3 12s ease-in-out infinite;
+}
 
-    animation:
-        particleFloat
-        var(--duration)
-        ease-in-out
-        infinite;
+.s4{
+    width:16vw;height:16vw;
+    background:radial-gradient(circle,#ffd700,transparent 70%);
+    bottom:22%;left:10%;
+    animation:float2 20s ease-in-out infinite reverse;
+}
+
+@keyframes float1{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    50%{transform:translateY(-4vh) rotate(180deg);}
+}
+@keyframes float2{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(5vh);}
+}
+@keyframes float3{
+    0%,100%{transform:translateX(0);}
+    50%{transform:translateX(-5vw);}
 }
 
 
-@keyframes particleFloat{
-
-    0%,100%{
-
-        transform:
-            translateY(0)
-            translateX(0)
-            scale(.7);
-
-        opacity:.15;
-    }
-
-    25%{
-
-        transform:
-            translateY(-25px)
-            translateX(10px)
-            scale(1);
-    }
-
-    50%{
-
-        transform:
-            translateY(-50px)
-            translateX(-8px)
-            scale(1.4);
-
-        opacity:.65;
-    }
-
-    75%{
-
-        transform:
-            translateY(-25px)
-            translateX(8px)
-            scale(1);
-    }
+/* =========================
+   FOOTER
+========================= */
+.footer{
+    position:absolute;
+    bottom:3vh;
+    width:100%;
+    text-align:center;
+    font-size:1.8vw;
+    font-weight:600;
+    letter-spacing:2px;
+    color:linear-gradient(-45deg,#000000,#0a1628,#0d1b2a,#1b263b,#2a3b55,#b8860b,#1b263b,#000000);
+    z-index:20;
+    text-shadow:0 0 15px rgba(218,165,32,0.4);
 }
 
-
-/* =========================================================
-   PROJECTION RESPONSIVENESS
-========================================================= */
-
-@media(max-width:1200px){
-
-    .church-name{
-
-        font-size:1vw;
-
-        letter-spacing:0;
-    }
-
-    .main-welcome{
-
-        font-size:9vw;
-    }
-
-    .welcome-small{
-
-        font-size:2.5vw;
-    }
-
-    .subtitle{
-
-        font-size:1.9vw;
-    }
-
-    .bottom-message{
-
-        font-size:2.2vw;
-    }
+/* glow */
+.glow{
+    position:absolute;
+    width:60vw;
+    height:60vw;
+    max-width:900px;
+    max-height:900px;
+    background:radial-gradient(circle,
+        rgba(30,58,95,.45),
+        rgba(70,130,180,.25),
+        rgba(218,165,32,.15),
+        transparent 70%);
+    left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    z-index:0;
+    animation:glowPulse 8s ease-in-out infinite;
 }
 
-
+@keyframes glowPulse{
+    0%,100%{opacity:.7; transform:translate(-50%,-50%) scale(1);}
+    50%{opacity:1; transform:translate(-50%,-50%) scale(1.15);}
+}
 </style>
 </head>
-
-
 <body>
-
-<div class="screen">
-
-
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
-    <header class="header">
-
-        <img
-            src="pcglogo.png"
-            class="logo"
-            alt="Church Logo"
-            onerror="this.style.display='none'"
-        >
-
-        <div class="church-name">
-            THE PENTECOSTAL CHURCH OF GOD
-        </div>
-
-    </header>
-
-
-
-    <!-- =====================================================
-         LEFT SIDE SHAPES
-    ====================================================== -->
-
-    <aside class="side side-left">
-
-        <div class="shape blue"></div>
-
-        <div class="shape green"></div>
-
-        <div class="shape red"></div>
-
-    </aside>
-
-
-
-    <!-- =====================================================
-         RIGHT SIDE SHAPES
-    ====================================================== -->
-
-    <aside class="side side-right">
-
-        <div class="shape red"></div>
-
-        <div class="shape yellow"></div>
-
-        <div class="shape green"></div>
-
-    </aside>
-
-
-
-    <!-- =====================================================
-         MAIN PRESENTATION AREA
-    ====================================================== -->
-
-    <main class="main-area">
-
-
-        <!-- ================================================
-             INFINITE WELCOME
-        ================================================= -->
-
-        <div class="welcome-scroll">
-
-            <div class="welcome-track">
-
-
-                <div class="welcome-group">
-
-                    <span>WELCOME</span>
-                    <span>WELCOME</span>
-                    <span>WELCOME</span>
-                    <span>WELCOME</span>
-                    <span>WELCOME</span>
-                    <span>WELCOME</span>
-
-                </div>
-
-
-                <div class="welcome-group">
-
-                    <span>WELCOME</span>
-                    <span>WELCOME</span>
-                    <span>WELCOME</span>
-                    <span>WELCOME</span>
-                    <span>WELCOME</span>
-                    <span>WELCOME</span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             MOVING LIGHT BEAMS
-        ================================================== -->
-
-        <div class="light-beam beam-red"></div>
-
-        <div class="light-beam beam-gold"></div>
-
-        <div class="light-beam beam-green"></div>
-
-
-
-        <!-- =================================================
-             PARTICLES
-        ================================================== -->
-
-        <div
-            class="particle"
-            style="left:12%;top:20%;--duration:7s;"
-        ></div>
-
-        <div
-            class="particle"
-            style="left:22%;top:70%;--duration:9s;"
-        ></div>
-
-        <div
-            class="particle"
-            style="left:35%;top:25%;--duration:6s;"
-        ></div>
-
-        <div
-            class="particle"
-            style="left:48%;top:75%;--duration:8s;"
-        ></div>
-
-        <div
-            class="particle"
-            style="left:60%;top:22%;--duration:10s;"
-        ></div>
-
-        <div
-            class="particle"
-            style="left:72%;top:70%;--duration:7s;"
-        ></div>
-
-        <div
-            class="particle"
-            style="left:84%;top:35%;--duration:9s;"
-        ></div>
-
-
-
-        <!-- =================================================
-             CENTER CONTENT
-        ================================================== -->
-
-        <div class="center-content">
-
-            <div class="welcome-small">
-                WELCOME TO
-            </div>
-
-            <div class="main-welcome">
-                CHURCH
-            </div>
-
-            <div class="subtitle">
-                WORSHIP • WORD • WITNESS
-            </div>
-
-        </div>
-
-
-    </main>
-
-
-
-    <!-- =====================================================
-         BOTTOM BAR
-    ====================================================== -->
-
-    <footer class="bottom-bar">
-
-
-        <div
-            class="bottom-shape"
-            style="background:#347db5;"
-        ></div>
-
-
-        <div
-            class="bottom-shape"
-            style="background:#f3b91c;"
-        ></div>
-
-
-        <div class="bottom-message">
-            HAPPY HERITAGE MONTH
-        </div>
-
-
-        <div
-            class="bottom-shape"
-            style="background:#d32f3b;"
-        ></div>
-
-
-        <div
-            class="bottom-shape"
-            style="background:#f3b91c;"
-        ></div>
-
-
-    </footer>
-
-
+<!-- Seamless background scrolling THANK YOU (visible immediately) -->
+<div class="bg-scroll">
+    <div class="bg-scroll-track">
+        <span>WELCOME&nbsp;&nbsp;WELCOME&nbsp;&nbsp;WELCOME&nbsp;&nbsp;WELCOME&nbsp;&nbsp;WELCOME&nbsp;&nbsp;WELCOME&nbsp;&nbsp;</span>
+        <span>WELCOME&nbsp;&nbsp;WELCOME&nbsp;&nbsp;WELCOME&nbsp;&nbsp;WELCOME&nbsp;&nbsp;WELCOME&nbsp;&nbsp;WELCOME&nbsp;&nbsp;</span>
+    </div>
+</div>
+
+<!-- Header -->
+<div class="header">
+    <img src="pcglogo.webp" class="logo" alt="Church Logo" onerror="this.style.display='none'">
+    <div class="name">
+    THE PENTECOSTAL CHURCH OF GOD
+</div>
+</div>
+
+<!-- Moving Text Top -->
+
+
+      
+    </div>
+</div>
+
+<!-- Center Thank You -->
+<div class="center-wrap">
+   
+    <div class="main-text">WELCOME</div>
 </div>
 
 
+<!-- Floating Shapes -->
+<div class="shape s1"></div>
+<div class="shape s2"></div>
+<div class="shape s3"></div>
+<div class="shape s4"></div>
+
+<!-- Moving Text Bottom -->
+<div class="marquee bottom">
+    <div class="track">
+      
+
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  "WE EXIST TO BE HEAVENNLY BOUND,EDIFY THE CHURCH AND EVANGELIZE THE WORLD".
+</div>
 
 <script>
-
-/* =========================================================
-   RANDOM PARTICLE POSITIONS
-========================================================= */
-
-const particles =
-    document.querySelectorAll(".particle");
-
-
-particles.forEach(particle => {
-
-    particle.style.left =
-        (8 + Math.random() * 84) + "%";
-
-    particle.style.top =
-        (12 + Math.random() * 76) + "%";
-
-});
-
-
-/* =========================================================
-   RANDOM SHAPE BREATHING
-========================================================= */
-
-const shapes =
-    document.querySelectorAll(
-        ".shape, .bottom-shape"
-    );
-
-
-setInterval(() => {
-
-    shapes.forEach(shape => {
-
-        const scale =
-            0.97 +
-            Math.random() * 0.06;
-
-        shape.style.scale = scale;
-
+// Soft blur breathing on floating shapes
+const shapes = document.querySelectorAll('.shape');
+setInterval(()=>{
+    shapes.forEach(shape=>{
+        shape.style.filter = `blur(${4 + Math.random()*6}px)`;
     });
-
 }, 2500);
-
-
-/* =========================================================
-   PREVENT PAGE SCROLLING
-========================================================= */
-
-document.addEventListener(
-    "wheel",
-    event => {
-        event.preventDefault();
-    },
-    {passive:false}
-);
-
-
-document.addEventListener(
-    "touchmove",
-    event => {
-        event.preventDefault();
-    },
-    {passive:false}
-);
-
 </script>
 
 </body>
